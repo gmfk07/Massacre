@@ -16,7 +16,7 @@ public class ActionPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void Update()
     {
-        if (!mouseOver && displaying && Input.GetMouseButtonDown(0))
+        if (displaying && Input.GetMouseButtonUp(0))
         {
             Hide();
         }
