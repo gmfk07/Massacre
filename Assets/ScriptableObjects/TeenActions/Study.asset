@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db258132e5c57944a9014755d6b4a875, type: 3}
-  m_Name: Attack
+  m_Name: Study
   m_EditorClassIdentifier: 
-  message: <> attacked the killer for 1 damage.
-  damage: 1
-  insight: 0
+  message: <> studied the killer and gained 1 insight.
+  damage: 0
+  insight: 1
   healHealth: 0
   healSanity: 0
