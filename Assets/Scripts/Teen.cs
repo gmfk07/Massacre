@@ -23,6 +23,18 @@ public class Teen : MonoBehaviour, IPointerClickHandler
     {
         health = maxHealth;
         sanity = maxSanity;
+        UpdateHealthText();
+        UpdateSanityText();
+    }
+
+    private void UpdateSanityText()
+    {
+        sanityText.text = sanity.ToString() + "/" + maxSanity.ToString();
+    }
+
+    private void UpdateHealthText()
+    {
+        healthText.text = health.ToString() + "/" + maxHealth.ToString();
     }
 
     public void OnPointerClick(PointerEventData pointerEventData)
@@ -31,26 +43,29 @@ public class Teen : MonoBehaviour, IPointerClickHandler
         for (int i = 0; i < availableActions.Count; i++)
         {
             GameObject newButton = Instantiate(button, actionPanel.transform);
-            newButton.GetComponentInChildren<Text>().text = availableActions[i].message.Replace("<>", Name);
-            newButton.GetComponent<Button>().onClick.AddListener(() => PerformTeenAction(availableActions[i]));
+            newButton.GetComponentInChildren<Text>().text = availableActions[i].Name;
+            var x = i;
+            newButton.GetComponent<Button>().onClick.AddListener(() => PerformTeenAction(x));
         }
     }
 
-    private void PerformTeenAction(TeenAction action)
+    private void PerformTeenAction(int actionIndex)
     {
-        ChangeHealth(action.HealSanity);
-        ChangeSanity(action.HealHealth);
+        TeenAction action = availableActions[actionIndex];
+        messageManager.PostMessage(action.message.Replace("<>", Name));
+        ChangeHealth(action.HealHealth);
+        ChangeSanity(action.HealSanity);
     }
 
     private void ChangeHealth(int delta)
     {
-        health = Mathf.Min(health + delta, maxHealth);
-        healthText.text = health.ToString() + "/" + maxHealth.ToString();
+        health = Mathf.Clamp(health + delta, 0, maxHealth);
+        UpdateHealthText();
     }
 
     private void ChangeSanity(int delta)
     {
-        sanity = Mathf.Min(sanity + delta, maxSanity);
-        sanityText.text = sanity.ToString() + "/" + maxSanity.ToString();
+        sanity = Mathf.Clamp(sanity + delta, 0, maxSanity);
+        UpdateSanityText();
     }
 }

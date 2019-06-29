@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Rest
   m_EditorClassIdentifier: 
   message: <> rested, recovering 1 Health and 1 Sanity.
-  damage: 0
-  insight: 1
-  healHealth: 0
-  healSanity: 0
+  Name: Rest
+  Damage: 0
+  Insight: 0
+  HealHealth: 1
+  HealSanity: 1

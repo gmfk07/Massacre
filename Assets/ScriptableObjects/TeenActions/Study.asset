@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db258132e5c57944a9014755d6b4a875, type: 3}
   m_Name: Study
   m_EditorClassIdentifier: 
-  message: <> studied the killer and gained 1 insight.
-  damage: 0
-  insight: 1
-  healHealth: 0
-  healSanity: 0
+  message: <> studied the killer and gained 1 insight, but lost 1 sanity.
+  Name: Study
+  Damage: 0
+  Insight: 1
+  HealHealth: 0
+  HealSanity: -1
