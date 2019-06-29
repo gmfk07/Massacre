@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
-    [HideInInspector] public List<Teen> teens = new List<Teen>();
+    [HideInInspector] public List<Teen> Teens = new List<Teen>();
+    [HideInInspector] public Killer Killer;
+    [HideInInspector] public Dictionary<Teen, TeenAction> teenActionDict = new Dictionary<Teen, TeenAction>();
+
     [SerializeField] private int teenActionsPerTurn;
+
     private int teenActionsPerformed;
 
     public void IncreaseTeenActions()
@@ -13,21 +17,17 @@ public class TurnManager : MonoBehaviour
         teenActionsPerformed++;
         if (teenActionsPerformed == teenActionsPerTurn)
         {
-            StartTeenTurn();
+           StartCoroutine(Killer.HandleKillerTurn());
         }
     }
 
-    private void StartTeenTurn()
+    public void StartTeenTurn()
     {
         teenActionsPerformed = 0;
-        foreach (Teen teen in teens)
+        teenActionDict.Clear();
+        foreach (Teen teen in Teens)
         {
             teen.HandleNewTurn();
         }
-    }
-
-    private void StartKillerTurn()
-    {
-
     }
 }

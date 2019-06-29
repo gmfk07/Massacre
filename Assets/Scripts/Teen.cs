@@ -21,14 +21,14 @@ public class Teen : MonoBehaviour, IPointerClickHandler
 
     private bool acted = false;
 
-    private int health;
-    private int sanity;
+    public int health { get; private set; }
+    public int sanity { get; private set; }
 
     private void Start()
     {
         health = maxHealth;
         sanity = maxSanity;
-        turnManager.teens.Add(this);
+        turnManager.Teens.Add(this);
         HandleNewTurn();
         UpdateHealthText();
         UpdateSanityText();
@@ -72,20 +72,22 @@ public class Teen : MonoBehaviour, IPointerClickHandler
 
         TeenAction action = availableActions[actionIndex];
 
-        turnManager.IncreaseTeenActions();
-
-        messageManager.PostMessage(action.message.Replace("<>", Name));
+        messageManager.PostMessage(action.message.Replace("<>", Name), true);
         ChangeHealth(action.HealHealth);
         ChangeSanity(action.HealSanity);
+        turnManager.Killer.ChangeHealth(-action.Damage);
+        turnManager.Killer.ChangeInsight(action.Insight);
+
+        turnManager.IncreaseTeenActions();
     }
 
-    private void ChangeHealth(int delta)
+    public void ChangeHealth(int delta)
     {
         health = Mathf.Clamp(health + delta, 0, maxHealth);
         UpdateHealthText();
     }
 
-    private void ChangeSanity(int delta)
+    public void ChangeSanity(int delta)
     {
         sanity = Mathf.Clamp(sanity + delta, 0, maxSanity);
         UpdateSanityText();

@@ -6,15 +6,11 @@ using UnityEngine.UI;
 public class MessageManager : MonoBehaviour
 {
     public GameObject chatPanel, textObject;
+    [SerializeField] private Color teenActionTextColor;
+    [SerializeField] private Color killerActionTextColor;
 
-    public void Update()
-    {
-        if (Input.GetButtonDown("Jump"))
-            PostMessage(Random.Range(0, 10).ToString());
-    }
-
-    //Post a new message with given text
-    public void PostMessage(string text)
+    //Post a new message with given text, using appropriate coloring based on isTeenAction
+    public void PostMessage(string text, bool isTeenAction)
     {
         Message newMessage = new Message();
         GameObject newTextObject = Instantiate(textObject, chatPanel.transform);
@@ -22,6 +18,7 @@ public class MessageManager : MonoBehaviour
         newMessage.text = text;
         newMessage.textObject = newTextObject.GetComponent<Text>();
         newMessage.textObject.text = newMessage.text;
+        newMessage.textObject.color = isTeenAction ? teenActionTextColor : killerActionTextColor;
     }
 }
 

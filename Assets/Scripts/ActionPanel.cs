@@ -8,6 +8,8 @@ public class ActionPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 {
     private bool displaying = false;
     private bool mouseOver = false;
+    [SerializeField] private int furthestRight;
+    [SerializeField] private Canvas canvas;
 
     private void Start()
     {
@@ -41,6 +43,13 @@ public class ActionPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             gameObject.SetActive(true);
             transform.position = Input.mousePosition;
+
+            var rt = gameObject.GetComponent<RectTransform>();
+            var refRes = (canvas.transform as RectTransform).sizeDelta;
+
+            if (rt.position.x > furthestRight)
+                rt.position = new Vector2(furthestRight, rt.position.y);
+
             displaying = true;
         }
     }
